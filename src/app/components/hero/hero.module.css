@@ -1,0 +1,10 @@
+.container {
+    background-image: url('/beer-background.svg');
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image */
+    width: 100vw;
+}
+
+.button:hover{
+    background-color: black;
+}

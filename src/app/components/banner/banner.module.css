@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    width: 100vw;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    color: black
+}
+
+.name {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-left: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-right: 1rem;
+    font-size: 1.2rem;
+    font-weight: semi-bold;
+    cursor: pointer;
+}
