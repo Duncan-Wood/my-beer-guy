@@ -1,8 +1,12 @@
+"use client"
+
 import React from "react";
 import ServiceCard from "./service-card";
 import styles from "./services.module.css";
 import Grid from "@mui/joy/Grid";
 import { Typography } from "@mui/joy";
+import Link from "next/link";
+import { Suspense } from "react";
 
 const Services = () => {
   return (
@@ -10,18 +14,20 @@ const Services = () => {
       <Typography level="h2" className="text-center">
         Our Services
       </Typography>
+      <Suspense fallback={<div>test</div>}>
       <Grid
         container
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 2, sm: 4, md: 6, lg: 8 }}
         className="p-4"
       >
-        
         <Grid xs={2} sm={2} md={2} lg={2}>
-          <ServiceCard
-            img="/services/beer-and-wine-cleaning.jpeg"
-            title="Beer and Wine Line Cleaning"
-          />
+          <Link href='/service/beer-and-wine-cleaning'>
+            <ServiceCard
+              img="/services/beer-and-wine-cleaning.jpeg"
+              title="Beer and Wine Line Cleaning"
+            />
+          </Link>
         </Grid>
         <Grid xs={2} sm={2} md={2} lg={2}>
           <ServiceCard
@@ -57,6 +63,7 @@ const Services = () => {
           />
         </Grid>
       </Grid>
+      </Suspense>
     </div>
   );
 };
