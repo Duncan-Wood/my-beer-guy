@@ -5,29 +5,40 @@ import React, {
   useRef,
   useEffect,
 } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from 'next/navigation';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import styles from "./modal.module.css";
 import Link from "next/link";
 
 
-export default function Modal({ children }) {
+export default function Modal({ children, prevlink, nextLink }) {
   const router = useRouter();
   const { replace } = router;  
 
   const overlay = useRef(null);
   const wrapper = useRef(null);
-  const prevLinkRef = useRef(null);
-  const nextLinkRef = useRef(null);
+
+  const links = [
+    "/service/beer-and-wine-cleaning",
+    "/service/emergency-service-and-repair",
+    "/service/draft-beer-system-audits",
+    "/service/draft-system-installation",
+    "/service/glycol-system-service",
+    "/service/bar-supplies",
+    "/service/fruit-fly-control",
+  ];
+
+  const currentIndex = links.indexOf(pathname);
+
+  const prevIndex = currentIndex > 0 ? currentIndex - 1 : " ";
+  const nextIndex = currentIndex < links.length - 1 ? currentIndex + 1 : " ";
 
   const onDismiss = () => {
       replace("/");
-      router.refresh();
-      console.log('triggered')
+      router.reload();
     }
   
-
   const clickOverlay = useCallback(
     (e) => {
       if (e.target === overlay.current || e.target === wrapper.current) {
@@ -76,46 +87,47 @@ export default function Modal({ children }) {
   return (
     <div
       ref={overlay}
-      className="overlay fixed inset-0 mx-auto bg-black/60 p-10"
-      id="test"
+      className={styles.overlay}
       onClick={clickOverlay}
     >
       <div
         ref={wrapper}
-        className="modal absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6"
+        className={styles.wrapper}
       >
         <Link href="/" style={{ display: "none" }}></Link>
-        {/* {prevCrawlId && ( */}
+        {prevlink != " " && (
           <>
             <div
             //   onClick={goToPreviousPage}
-              className={`arrowBack top-1/2 -translate-y-1/2 z-15000 ${styles.arrowBack}`}
+            className={styles.arrowBack}
             >
-              <ArrowBackIcon style={{ color: "rgba(77, 68, 227, 1)" }} />
+              <ArrowBackIcon />
             </div>
-            {/* <Link
-              href={`/update/${prevCrawlId}`}
-              ref={prevLinkRef}
+            <Link
+            prefetch={false}
+              href="/service/emergency-service-and-repair"
               style={{ display: "none" }}
-            ></Link> */}
+            ></Link> 
           </>
-        {/* )} */}
+        )}
+        <div className={styles.content}>
         {children}
-        {/* {nextCrawlId && ( */}
+        </div>
+        {nextLink != " " && (
           <>
             <div
             //   onClick={goToNextPage}
-              className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 ${styles.arrowForward}`}
+              className={styles.arrowForward}
             >
-              <ArrowForwardIcon style={{ color: "rgba(77, 68, 227, 1)" }} />
+              <ArrowForwardIcon/>
             </div>
-            {/* <Link
-              href={`/update/${nextCrawlId}`}
-              ref={nextLinkRef}
+            <Link
+            prefetch={false}
+              href={nextLink}
               style={{ display: "none" }}
-            ></Link> */}
+            ></Link>
           </>
-        {/* )} */}
+        )}
       </div>
     </div>
   );
