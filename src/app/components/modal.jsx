@@ -1,23 +1,25 @@
 "use client";
 
-import React, {
-  useCallback,
-  useRef,
-  useEffect,
-} from "react";
-import { useRouter, usePathname } from 'next/navigation';
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { useRouter, usePathname } from 'next/navigation'
+
+import Link from "next/link";
+import useEscapeKey from "../custom-hooks/useEscapeKey"
+
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import styles from "./modal.module.css";
-import Link from "next/link";
 
 
 export default function Modal({ children, prevlink, nextLink }) {
   const router = useRouter();
-  const { replace } = router;  
+  const pathname = usePathname()
 
   const overlay = useRef(null);
   const wrapper = useRef(null);
+
+  // Default to false to handle undefined pathname
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const links = [
     "/service/beer-and-wine-cleaning",
@@ -29,103 +31,54 @@ export default function Modal({ children, prevlink, nextLink }) {
     "/service/fruit-fly-control",
   ];
 
-  const currentIndex = links.indexOf(pathname);
-
-  const prevIndex = currentIndex > 0 ? currentIndex - 1 : " ";
-  const nextIndex = currentIndex < links.length - 1 ? currentIndex + 1 : " ";
-
-  const onDismiss = () => {
-      replace("/");
-      router.reload();
-    }
-  
-  const clickOverlay = useCallback(
-    (e) => {
-      if (e.target === overlay.current || e.target === wrapper.current) {
-        if (onDismiss) onDismiss();
-      }
-    },
-    [onDismiss, overlay, wrapper]
-  );
-
-  const onKeyDown = useCallback(
-    (e) => {
-      if (e.key === "Escape") {
-        onDismiss();
-      }
-    },
-    [onDismiss]
-  );
-
   useEffect(() => {
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [onKeyDown]);
+    
+    // Only update state when pathname is defined
+    if (pathname) {
+      console.log("pathname", pathname)
 
-//   const goToPreviousPage = () => {
-//     if (prevCrawlId) {
-//       if (prevLinkRef.current) {
-//         prevLinkRef.current.click();
-//       }
-//     } else {
-//       router.push(homeURL);
-//       router.refresh();
-//     }
-//   };
+      setIsModalOpen(links.includes(pathname));
+    }
+  }, [pathname]);
 
-//   const goToNextPage = () => {
-//     if (nextCrawlId) {
-//       if (nextLinkRef.current) {
-//         nextLinkRef.current.click();
-//       }
-//     } else {
-//       router.push(homeURL);
-//       router.refresh();
-//     }
-//   };
+  const onDismiss = useCallback(() => {
+    setIsModalOpen(false); 
+    router.push("/")
+  }, [router]);
+
+  const clickOverlay = useCallback((e) => {
+    if (e.target === overlay.current || e.target === wrapper.current) {
+      onDismiss();
+    }
+  }, [onDismiss]);
+
+  useEscapeKey(isModalOpen, onDismiss);
+
+  // Don't render the modal if it's not open
+  if (!isModalOpen) return null; 
+
 
   return (
-    <div
-      ref={overlay}
-      className={styles.overlay}
-      onClick={clickOverlay}
-    >
-      <div
-        ref={wrapper}
-        className={styles.wrapper}
-      >
+    <div ref={overlay} className={styles.overlay} onClick={clickOverlay}>
+      <div ref={wrapper} className={styles.wrapper}>
         <Link href="/" style={{ display: "none" }}></Link>
         {prevlink != " " && (
           <>
-            <div
-            //   onClick={goToPreviousPage}
-            className={styles.arrowBack}
-            >
+            <div className={styles.arrowBack}>
               <ArrowBackIcon />
             </div>
-            <Link
-            prefetch={false}
-              href="/service/emergency-service-and-repair"
-              style={{ display: "none" }}
-            ></Link> 
+            <Link prefetch={false} href="/service/emergency-service-and-repair" style={{ display: "none" }}></Link> 
           </>
         )}
-        <div className={styles.content}>
-        {children}
+          <div className={styles.content}>
+          {children}
         </div>
         {nextLink != " " && (
           <>
-            <div
-            //   onClick={goToNextPage}
-              className={styles.arrowForward}
-            >
-              <ArrowForwardIcon/>
+            <div className={styles.arrowForward}>
+              <ArrowForwardIcon />
             </div>
-            <Link
-            prefetch={false}
-              href={nextLink}
-              style={{ display: "none" }}
-            ></Link>
+            <Link prefetch={false} href={nextLink} style={{ display: "none" }}></Link>
           </>
         )}
       </div>
