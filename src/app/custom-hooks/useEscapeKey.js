@@ -1,9 +1,6 @@
 import { useEffect } from "react";
-import { useRouter } from 'next/navigation'
-
 
 function useEscapeKey(isModalOpen, onEscape) {
-  const router = useRouter();
 
   useEffect(() => {
     if (!isModalOpen) return;
