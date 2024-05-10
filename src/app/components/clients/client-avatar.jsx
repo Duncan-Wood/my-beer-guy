@@ -1,9 +1,21 @@
-import React from 'react'
+import Image from "next/image";
 
-const ClientAvatar = () => {
+const ClientAvatar = ({clientLogo}) => {
+  console.log(clientLogo);
+
+  if (!clientLogo) {
+    return null;
+  }
+
   return (
-    <div>ClientAvatar</div>
-  )
-}
+    <Image
+      src={clientLogo}
+      width={150}
+      height={150}
+      alt="Picture of the author"
+      loading="lazy"
+    />
+  );
+};
 
-export default ClientAvatar
+export default ClientAvatar;
