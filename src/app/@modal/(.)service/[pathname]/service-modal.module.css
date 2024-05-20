@@ -1,0 +1,37 @@
+.header {
+  font-size: x-large;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 6px;
+}
+.image {
+  align-self: center;
+}
+.description {
+  text-align: center;
+}
+
+@media (min-width: 1170px) {
+  .content {
+    flex-direction: row;
+    gap: 6px;
+  }
+  .image {
+    justify-self: center;
+  }
+  .description {
+    width: 50%;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+}

@@ -1,7 +1,6 @@
 import { Typography } from "@mui/joy";
 import Grid from "@mui/joy/Grid";
 import ClientAvatar from "./client-avatar";
-import styles from "./clients.module.css";
 
 const Clients = () => {
   let fourBrands = "/clients/4-brands-horizontal.png";
@@ -21,7 +20,7 @@ const Clients = () => {
         alignContent="center"
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 2, sm: 4, md: 6, lg: 8 }}
-        className="p-4"
+        className="p-4"c
         textAlign={{ xs: "center", sm: "center", md: "center" }}
       >
         <Grid xs={2} sm={2} md={2} lg={2}>

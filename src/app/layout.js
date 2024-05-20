@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./components/globals.css";
+import Banner from './components/banner/banner'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,6 +15,7 @@ export default function RootLayout(props) {
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
           {modal}
+          <Banner />
           {props.children}
       </body>
     </html>

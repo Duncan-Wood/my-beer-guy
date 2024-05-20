@@ -4,9 +4,7 @@ import { Button } from '@mui/joy'
 const Hero = () => {
   return (
     <div className={`${styles.container} relative text-center p-10 md:p-20`}>
-      {/* Overlay to improve text visibility */}
       <div className="absolute top-0 left-0 right-0 bottom-0 bg-black opacity-25 z-0"></div>
-
       <div className="relative z-10 max-w-2xl mx-auto space-y-4">
         <h1 className="text-7xl font-extrabold text-white drop-shadow-2xl">My Beer Guy</h1>
         <h2 className="text-4xl text-white drop-shadow-xl">Defenders of the Draft</h2>

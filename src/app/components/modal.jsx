@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
 import Link from "next/link";
@@ -10,9 +10,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import styles from "./modal.module.css";
 
-export default function Modal({ children, prevLink, nextLink }) {
+export default function Modal({ children, prevLink, nextLink, pathname}) {
   const router = useRouter();
-  const pathname = usePathname();
 
   const overlay = useRef(null);
   const wrapper = useRef(null);
@@ -73,7 +72,7 @@ export default function Modal({ children, prevLink, nextLink }) {
           </>
         )}
         <div className={styles.content}>{children}</div>
-        {nextLink != "" && (
+        {nextLink && (
           <>
             <div
               className={styles.arrowForward}

@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin-top: 10vh;
+} 
+
+.header {
+  font-size: xx-large;
+  font-weight: 800;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 14px;
+  padding: 20px;
+}
+.image {
+  align-self: center;
+}
+.description {
+  text-align: center;
+  font-size: 24px;
+}
+
+@media (min-width: 1170px) {
+  .content {
+    flex-direction: row;
+    gap: 6px;
+  }
+  .image {
+    justify-self: center;
+  }
+  .description {
+    width: 50%;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+}

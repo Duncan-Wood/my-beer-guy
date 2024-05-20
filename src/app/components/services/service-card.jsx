@@ -7,13 +7,18 @@ import Typography from "@mui/joy/Typography";
 import Button from "@mui/joy/Button";
 import styles from "./services.module.css";
 
+import Image from "next/image";
+
+
 export default function ServiceCard({ img, title }) {
   return (
     <Card className={styles.cardContainer} sx={{ width: 320}}>
       <CardOverflow>
         <AspectRatio minHeight="120px" maxHeight="200px">
-          <img
+          <Image
             src={img}
+            height={200}
+            width={200}
             srcSet={img}
             loading="lazy"
             alt="Beer and Wine Line Cleaning Image"
